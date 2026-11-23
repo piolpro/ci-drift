@@ -4,13 +4,11 @@ Catch Node.js CI breakage in GitHub Actions workflows before it ships. ci-drift 
 
 ## CLI
 
-Requires Node.js 20 or newer. Once v0.1.0 is published:
+Requires Node.js 20 or newer. Run directly from the [GitHub release](https://github.com/piolpro/ci-drift/releases/tag/v0.1.0); ci-drift is not published to the npm registry.
 
 ```sh
-npx ci-drift@0.1.0
-npm install --global ci-drift@0.1.0
-ci-drift ./path/to/repo
-ci-drift --format json --eol ./path/to/repo
+npx --yes 'github:piolpro/ci-drift#v0.1.0'
+npx --yes 'github:piolpro/ci-drift#v0.1.0' --format json --eol ./path/to/repo
 ```
 
 From a source checkout, run `npm ci` and `node src/cli.js [path]`.
@@ -24,7 +22,7 @@ JSON output is an array of objects with `id`, `severity`, `file`, `line` (1-base
 
 ## GitHub Action
 
-Use the composite action after checkout. The `v1` ref below is the intended stable Action ref; on an unreleased checkout, use `uses: ./` instead.
+Use the composite action after checkout. The `v1` tag tracks the latest compatible Action release; use `@v0.1.0` to pin this release, or `uses: ./` to test a local checkout of ci-drift.
 
 ```yaml
 name: Lint CI
