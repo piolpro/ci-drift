@@ -1,0 +1,17 @@
+{
+  "name": "ci-drift",
+  "version": "0.1.0",
+  "description": "Catch Node.js CI breakage in GitHub Actions workflows before it ships",
+  "type": "module",
+  "bin": { "ci-drift": "src/cli.js" },
+  "files": ["src", "CHANGELOG.md"],
+  "engines": { "node": ">=20" },
+  "scripts": { "test": "node --test" },
+  "repository": { "type": "git", "url": "git+https://github.com/piolpro/ci-drift.git" },
+  "bugs": "https://github.com/piolpro/ci-drift/issues",
+  "license": "MIT",
+  "dependencies": {
+    "semver": "^7.8.6",
+    "yaml": "^2.9.1"
+  }
+}

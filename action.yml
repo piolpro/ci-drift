@@ -1,0 +1,34 @@
+name: ci-drift
+description: Catch Node.js version and tooling drift in GitHub Actions workflows
+branding:
+  icon: alert-circle
+  color: blue
+inputs:
+  path:
+    description: Repository directory relative to GITHUB_WORKSPACE
+    default: '.'
+  eol:
+    description: Emit warnings for end-of-life Node releases
+    default: 'false'
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 24
+        package-manager-cache: false
+    - name: Install ci-drift dependencies
+      shell: bash
+      env:
+        ACTION_ROOT: ${{ github.action_path }}
+      run: npm ci --prefix "$ACTION_ROOT" --ignore-scripts --no-audit --no-fund
+    - name: Lint workflows
+      shell: bash
+      env:
+        ACTION_ROOT: ${{ github.action_path }}
+        INPUT_PATH: ${{ inputs.path }}
+        INPUT_EOL: ${{ inputs.eol }}
+      run: |
+        args=()
+        if [[ "$INPUT_EOL" == 'true' ]]; then args+=(--eol); fi
+        node "$ACTION_ROOT/src/cli.js" "${args[@]}" -- "$GITHUB_WORKSPACE/$INPUT_PATH"

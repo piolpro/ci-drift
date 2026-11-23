@@ -1,0 +1,9 @@
+jobs:
+  docs:
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: npx typedoc src/index.ts --out docs/generated
